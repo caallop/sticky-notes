@@ -1,0 +1,15 @@
+1-site do bootstrap (link para baixar) https://getbootstrap.com/docs/5.3/getting-started/download/
+
+2- baixar a versão compilada e extrair 
+
+3- aí vc vai abrir o o css, (dentro da pasta do bootstrap) e achar a pasta "bootstrap.min.css" e colar essa pasta dentro do arquivo "src/public/css" e a pasta "bootstrap.min.js" dentro da pasta js do arquivo extraido, colocar esse ariquivo dentro de "src/public/js"
+
+4- dentro do index.html eu copio as linhas comentadas com "bootstrap"
+
+para fontes
+
+1-entrar no site fredoka
+2- selecionar a fnte desejada
+3-baixar e extrair
+4- colocar dentro da pasta publica, dentro de css
+5-para instalar para o electron, no style.css (Td comentado no style.css logo em cima ou em algum canto{procura com o ctrf+F caso n ache [pesquisa a tag fonts off-line]})

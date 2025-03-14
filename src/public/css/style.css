@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+/**importaçao da font offline**/
+@font-face {
+    font-family: Inter;
+    src: url("../css/Inter/Inter-Italic-VariableFont_opsz\,wght.ttf");
+}
+
+body {
+    /**DEIXAR A FONTE DENTRO DO ELECTRON**/
+    font-family: "Inter";
+}
+
+/** Rodapé **/
+footer {
+    width: 100%;
+    height: 50px;
+    background-color: #e15a1f;
+    display: flex;
+    justify-content: space-between;
+
+    padding: 5px;
+    position: fixed;
+    bottom: 0;
+}
+
+footer p{
+ color: azure;
+ font-size: 1.2em;
+}
