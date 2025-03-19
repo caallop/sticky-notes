@@ -5,6 +5,8 @@
 
 // importação do mongoose
 const mongoose = require('mongoose')
+//NAO ESQUECER DE NSTALAR O MODULO!!!!!!!!!!
+//(npm i mongoose)
 
 // configuração do banco de dados
 // ip/link do servidor, autenticação 

@@ -3,7 +3,7 @@
  * processo de renderizaçao do documento index.html
  */
 
-console.log("Processo de renderizaçao") 
+console.log("Processo de renderizaçao")
 
 // inserção da data no rodapé
 function obterData() {
@@ -18,3 +18,17 @@ function obterData() {
 }
 
 document.getElementById('dataAtual').innerHTML = obterData()
+
+//-----------------------------------------------------------------\\
+
+//troca do icone do banco de dados (satatus da conexao)
+//uso da api do preload.js
+api.dbStatus((event, message) => {
+    // teste de recebimento da mensagem
+    console.log(message)
+    if (message === "conectado") {
+        document.getElementById('iconeDB').src = "../public/img/dbon.png"
+    } else {
+        document.getElementById('iconeDB').src = "../public/img/dboff.png"
+    }
+})
