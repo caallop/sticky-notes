@@ -26,12 +26,14 @@ const conectar = async () => {
             await mongoose.connect(url) //conectar
             conectado = true //setar a variável
             console.log("MongoDB conectado")
+            return true
         } catch (error) {
             //tratamento de exceções especificas
             if(error.code = 110000) {
                 console.log(`Erro: O CPF ${cpfCli} já está cadastrado `)
             }else {
              console.log(error)
+             return false
 
             }
            

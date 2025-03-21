@@ -60,21 +60,60 @@ function aboutWindow() {
 
     about = new BrowserWindow({
       width: 320,
-      height: 280,
+      height: 220,
+      //autoHideMenuBar: true,
+      //resizable: false,
+      //minimizable: false,
+      // Estabelecer uma relação hierarquica entre janelas
+      parent: mainWindow,
+      // Criar uma janela modal (só retorna a principal quando encerrada)
+      modal: true,
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      }
+
+
+    })
+  }
+
+
+
+  about.loadFile('./src/views/sobre.html')
+  //recebimento da mensagem do renderizador da tela sobre para fechar a janela usando um botao
+  ipcMain.on('about-exit', () => {
+    if (about)
+
+      //validaçao se ja existir a janela e ela nao estiver sido destruida, fechar
+      about.close()
+  })
+
+}
+
+// Janela Sobre
+let note
+function noteWindow() {
+  nativeTheme.themeSource = 'light'
+  // Obter a janela principal
+  const mainWindow = BrowserWindow.getFocusedWindow()
+  //validação (se existir a janela principal)
+  if (mainWindow) {
+    note = new BrowserWindow({
+      width: 400,
+      height: 270,
       autoHideMenuBar: true,
       resizable: false,
       minimizable: false,
       // Estabelecer uma relação hierarquica entre janelas
       parent: mainWindow,
       // Criar uma janela modal (só retorna a principal quando encerrada)
-      modal: true
-
+      modal: true,
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      }
     })
   }
-
-  about.loadFile('./src/views/sobre.html')
+  note.loadFile('./src/views/nota.html')
 }
-
 // inicialização da aplicação (assincronismo)
 app.whenReady().then(() => {
   createWindow()
@@ -82,7 +121,6 @@ app.whenReady().then(() => {
   //no mongoDB, é mais eficiente mante uma unica conexao aberta durante todo o tempo de vida do aplicativo, e fechar a conecxao e encerrar a conexao com quando o aplicativo for finalizado
   //ipc.on (Receber as mensagens)
   //db-connect (rotulo da mensagen)
-
   ipcMain.on('db-connect', async (event) => {
     //a linha abaixo estabelece a conexao com o banco de dados
     await conectar()
@@ -91,8 +129,6 @@ app.whenReady().then(() => {
       event.reply('db-status', "conectado")
     }, 500) //500ms = 0.5 seg
   })
-
-
   // Só ativar a janela principal se nenuhma outra estiver ativa
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -100,37 +136,22 @@ app.whenReady().then(() => {
     }
   })
 })
-
-
 // Se o sistema não for MAC encerrar a aplicação quando a janela for fechada
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
-
 //criar um recurso para encerrar a conexao com banco de dados quando for fechado
 app.on('before-quit', async () => {
   await desconectar()
 })
-
-
 // Reduzir a verbozidade de logs não críticos (devtools)
 app.commandLine.appendSwitch('log-level', '3')
 
 // ================================
-
 // Template do menu
 const template = [
-  {
-    label: 'cadastro',
-    submenu: [
-      {
-label:'criar cadastro (botao temporario)',
-click: () =>cadastroWindow ()
-      }
-    ]
-  },
   {
     label: 'Notas',
     submenu: [
@@ -138,6 +159,7 @@ click: () =>cadastroWindow ()
         label: 'Criar nota',
         // tecla de atalho
         accelerator: 'Ctrl+N',
+        click: () => noteWindow()
         // "função"
         //click: () => console.log("teste")
       },
