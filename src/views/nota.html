@@ -3,7 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
-  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!--nome do site-->
@@ -19,20 +19,21 @@
 
 <body>
   <div class="container">
-    <section>
+    <section >
       <h1>
         Nova Nota
       </h1>
-      <form>
-        <input type="text" placeholder="escreva sua nota..." required>
+      <form id="frmNote">
+        <input type="text" placeholder="escreva sua nota..." id="inputNote" required>
         <h2>Escolha a cor</h2>
-        <select>
+        <select id="selectColor">
           <option value="amarelo">amarelo</option>
           <option value="azul">Azul</option>
           <option value="verde">Verde</option>
           <option value="rosa">Rosa</option>
           <option value="laranja">Laranja</option>
         </select>
+        <button type="submit">Salvar</button>
       </form>
     </section>
   </div>

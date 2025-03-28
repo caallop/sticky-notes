@@ -12,6 +12,9 @@ console.log("Hello Electron! Processo Principal.")
 //ipcMain(permite estabelcer uma comunicaçao entre processos (Ipc) main.js <==> renderer.js )
 const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain } = require('electron/main')
 
+//importaçao do modelo de dados(das notes.js)
+const noteModel = require ('./src/models/Notes.js')
+
 //ativaçao do preload.js (importaçao do path)
 const path = require('node:path')
 
@@ -25,8 +28,8 @@ const createWindow = () => {
   // definindo o tema da janela claro ou escuro
   nativeTheme.themeSource = 'light'
   win = new BrowserWindow({
-    width: 1310,
-    height: 920,
+    width: 710,
+    height: 520,
     // frame = menu padrão do electro, da p tirar e fazer na mão p personalizar com cores fora do padrão (preto/branco)
     // frame: false
     //
@@ -101,7 +104,7 @@ function noteWindow() {
       width: 400,
       height: 270,
       autoHideMenuBar: true,
-      resizable: false,
+      resizable: true,
       minimizable: false,
       // Estabelecer uma relação hierarquica entre janelas
       parent: mainWindow,
@@ -148,6 +151,11 @@ app.on('before-quit', async () => {
 })
 // Reduzir a verbozidade de logs não críticos (devtools)
 app.commandLine.appendSwitch('log-level', '3')
+
+
+
+
+
 
 // ================================
 // Template do menu
@@ -216,3 +224,24 @@ const template = [
     ]
   }
 ]
+
+//====================================================
+// CRUD create-inicio=================================
+
+//RECEBIMENTO DO OBJETO QUE CONTEM OS DADOS DA NOTA
+ipcMain.on('create-note', async(event, stickyNotes)=> {
+  //IMPORTANTE- TESTE DE RECEBIMENTO DO OBJETO --- !!!SEMPRE FAZER!!!
+  //passo 2
+  console.log(stickyNotes)
+  //criar uma nova estrutura de dados para salvar no banco de dados
+  //ATENÇAO!!!! os atrubutos da estrutura precisam ser identicos ao modelo e os valores sao obtidos atraves do objeto stickynotes
+  const newNote = noteModel({
+    texto: stickyNotes.textoNote,
+    cor: stickyNotes.colorNote
+  })
+  newNote.save()
+})
+
+
+// CRUD create-fim=================================
+//====================================================
