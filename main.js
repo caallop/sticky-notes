@@ -15,6 +15,7 @@ const {
   Menu,
   shell,
   ipcMain,
+  dialog,
 } = require("electron/main");
 
 //importaçao do modelo de dados(das notes.js)
@@ -222,18 +223,65 @@ const template = [
 // CRUD create-inicio=================================
 
 //RECEBIMENTO DO OBJETO QUE CONTEM OS DADOS DA NOTA
+
 ipcMain.on("create-note", async (event, stickyNotes) => {
   //IMPORTANTE- TESTE DE RECEBIMENTO DO OBJETO --- !!!SEMPRE FAZER!!!
-  //passo 2
-  console.log(stickyNotes);
-  //criar uma nova estrutura de dados para salvar no banco de dados
-  //ATENÇAO!!!! os atrubutos da estrutura precisam ser identicos ao modelo e os valores sao obtidos atraves do objeto stickynotes
-  const newNote = noteModel({
-    texto: stickyNotes.textoNote,
-    cor: stickyNotes.colorNote,
-  });
-  newNote.save();
+  //uso do try cathc para o tratamento de excessoes
+  try {
+    //passo 2
+    console.log(stickyNotes);
+    //criar uma nova estrutura de dados para salvar no banco de dados
+    //ATENÇAO!!!! os atrubutos da estrutura precisam ser identicos ao modelo e os valores sao obtidos atraves do objeto stickynotes
+    const newNote = noteModel({
+      texto: stickyNotes.textoNote,
+      cor: stickyNotes.colorNote,
+    });
+    newNote.save();
+    dialog
+      .showMessageBox({
+        type: "info",
+        title: "aviso",
+        message: "cliente adicionado com sucesso",
+        buttons: ["OK"],
+      })
+      .then((result) => {
+        if (result.response === 0) {
+          event.reply("reset-form");
+        }
+      });
+
+  } catch (error) {
+    console.log(error);
+  }
 });
 
-// CRUD create-fim=================================
-//====================================================
+// CRUD create-fim================================================================
+//================================================================================
+
+
+
+//=============================================================================
+//==============================CRUD READ-inicio===============================
+
+//passo 2- receber o pedido do rendederr e listas as notas e fazer a busca no banco de dados
+ipcMain.on('list-notes', async(event) =>{
+  try {
+    //passo 3- obter do banco a listagem de notas cadastradas
+    const notes = await noteModel.find()
+    console.log(notes)//teste do passo 3
+   
+    //passo 4- enviar ao renderer a listagem das notas
+    //obs: IPC (string) | banco (json) (é necessario fazer uma conversao)
+    //event.reply:uma resposta a solicitaçao (OBS!!!! especifica do solicitante)
+    event.reply('render-notes', JSON.stringify(notes))
+  } catch (error) {
+    console.log()
+  }
+  
+})
+
+
+
+//==============================CRUD READ-fim==================================
+//=============================================================================
+
