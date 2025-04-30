@@ -15,16 +15,16 @@ const mongoose = require("mongoose");
 const url =
   "mongodb+srv://admin:123Senac@hamburgueria.35fdg.mongodb.net/dbnotes";
 // validação (evitar a abertura de várias conexões)
-let conectado = false;
+let connectad = false;
 
 // método para conectar com o banco de dados
-const conectar = async () => {
+const connectDB = async () => {
   // se não estiver conectado
-  if (!conectado) {
+  if (!connectad) {
     //conectar com o banco de dados
     try {
       await mongoose.connect(url); //conectar
-      conectado = true; //setar a variável
+      connectad = true; //setar a variável
       console.log("MongoDB conectado");
       return true;
     } catch (error) {
@@ -36,13 +36,13 @@ const conectar = async () => {
 };
 
 // método para desconectar do banco de dados
-const desconectar = async () => {
+const disconnectDB = async () => {
   // se estiver conectado
-  if (conectado) {
+  if (connectad) {
     // desconectar
     try {
       await mongoose.disconnect(url); //desconectar
-      conectado = false; //setar a variável
+      connectad = false; //setar a variável
       console.log("MongoDB desconectado");
     } catch (error) {
       console.log(error);
@@ -51,4 +51,4 @@ const desconectar = async () => {
 };
 
 //exportar para o main os métodos conectar e desconectar
-module.exports = { conectar, desconectar };
+module.exports = { connectDB, disconnectDB };

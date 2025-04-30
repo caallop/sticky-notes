@@ -3,44 +3,25 @@
   <head>
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <meta
-      http-equiv="X-Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'"
+      content="script-src 'self' 'unsafe-inline' "
     />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--nome do site-->
-
-    <!--bootstrap-  ligar ao index-->
-    <link rel="stylesheet" href="../public/css/bootstrap.min.css" />
-
-    <!--css personalizado --- !!!ATENÇAO!!! sempre após o css do bootstrap-->
     <link rel="stylesheet" href="../public/css/style.css" />
-
     <title>Sticky Notes</title>
   </head>
-
   <div class="container">
-    <!--Renderizar notas (li sera gerado de forma dinamica pelo js de acordo com o numero de notas) -->
     <ul id="listNotes"></ul>
   </div>
-
   <body>
     <footer>
-      <p id="dataAtual"></p>
+      <p id="curentDate"></p>
       <img
         src="../public/img/dboff.png"
         id="iconeDB"
         alt=" icone do banco de dados"
       />
     </footer>
-
-    <!--bootstrap-  ligar ao index-->
-    <script src="../public/js/bootstrap.min.js"></script>
-
-    <!--processo de renderizaçao-->
     <script src="renderer.js"></script>
   </body>
 </html>
