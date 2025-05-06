@@ -154,7 +154,7 @@ const template = [
       {
         label: "Repositório",
         click: () =>
-          shell.openExternal("https://github.com/vitorapassos/stickynotes.git"),
+          shell.openExternal("https://github.com/caallop/sticky-notes.git"),
       },
       {
         label: "Sobre",
