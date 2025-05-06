@@ -25,8 +25,8 @@ const createWindow = () => {
   nativeTheme.themeSource = "light";
   win = new BrowserWindow({
     width: 1110,
-    height: 520,
-    resizable: false,
+    height: 720,
+    resizable: true,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
