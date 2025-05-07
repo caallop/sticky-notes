@@ -174,7 +174,7 @@ ipcMain.on("create-note", async (event, stickyNotes) => {
       .showMessageBox({
         type: "info",
         title: "aviso",
-        message: "cliente adicionado com sucesso",
+        message: "Nota adicionada com sucesso",
         buttons: ["OK"],
       })
       .then((result) => {

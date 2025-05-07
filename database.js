@@ -13,7 +13,7 @@ const mongoose = require("mongoose");
 // ao final da url definir o nome do banco de dados
 // exemplo: /dbclientes
 const url =
-  "mongodb://localhost:27017";
+  "mongodb+srv://admin:123Senac@hamburgueria.35fdg.mongodb.net/dbnotes";
 // validação (evitar a abertura de várias conexões)
 let connectad = false;
 
